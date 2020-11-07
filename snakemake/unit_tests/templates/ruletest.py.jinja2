@@ -29,7 +29,13 @@ def test_{{ ruletest.name }}():
             "python",
             "-m",
             "snakemake", 
+            {% if ruletest.target is string %}
             "{{ ruletest.target }}",
+            {% else %} 
+            {% for target in ruletest.target %}
+            "{{ target }}",
+            {% endfor %}
+            {% endif %}
             "-F", 
             "-j1",
             "--keep-target-files",

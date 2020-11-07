@@ -44,5 +44,11 @@ class OutputChecker:
                 )
             )
 
+    def is_valid_extension(self, ext, excluded=['.zip']):
+        if ext in excluded:
+            return True
+        return False
+
     def compare_files(self, generated_file, expected_file):
-        sp.check_output(["cmp", generated_file, expected_file])
+        if is_valid_extension(os.path.splitext(expected_file)[1]):
+            sp.check_output(["cmp", generated_file, expected_file])
